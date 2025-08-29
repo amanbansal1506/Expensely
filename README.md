@@ -3,6 +3,9 @@
 A responsive, user-friendly Expense Tracker web application built with **HTML, CSS, and JavaScript**.  
 It enables users to add income and expense transactions, categorize them, see running totals, visualize expense distribution, and persist data to **LocalStorage**.
 
+# Preview
+https://amanbansal1506.github.io/Expensely/
+
 ## Features (Per Requirements)
 - Separate **income** and **expense** transactions
 - Inputs for **date, description, category, amount**
