@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Expense Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Chart.js for the optional pie chart -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="header">
+    <h1>Expense Tracker</h1>
+    <p class="subtitle">Track income & expenses, visualize spend, and stay on budget.</p>
+  </header>
+
+  <main class="container">
+    <!-- Summary Cards -->
+    <section class="summary-grid">
+      <div class="card">
+        <h3>Total Income</h3>
+        <div id="total-income" class="metric">₹0</div>
+      </div>
+      <div class="card">
+        <h3>Total Expenses</h3>
+        <div id="total-expense" class="metric">₹0</div>
+      </div>
+      <div class="card balance">
+        <h3>Net Balance</h3>
+        <div id="net-balance" class="metric">₹0</div>
+      </div>
+    </section>
+
+    <!-- Forms and Filters -->
+    <section class="panel">
+      <h2>Add / Edit Transaction</h2>
+      <form id="txn-form" novalidate>
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="type">Type</label>
+            <select id="type" required>
+              <option value="income">Income</option>
+              <option value="expense">Expense</option>
+            </select>
+            <span class="error" data-for="type"></span>
+          </div>
+
+          <div class="form-field">
+            <label for="date">Date</label>
+            <input type="date" id="date" required />
+            <span class="error" data-for="date"></span>
+          </div>
+
+          <div class="form-field">
+            <label for="description">Description</label>
+            <input type="text" id="description" placeholder="e.g., Salary / Groceries" required />
+            <span class="error" data-for="description"></span>
+          </div>
+
+          <div class="form-field">
+            <label for="category">Category</label>
+            <select id="category" required>
+              <option value="">Select Category</option>
+              <option>Food</option>
+              <option>Transportation</option>
+              <option>Entertainment</option>
+              <option>Rent</option>
+              <option>Utilities</option>
+              <option>Shopping</option>
+              <option>Health</option>
+              <option>Education</option>
+              <option>Other</option>
+            </select>
+            <span class="error" data-for="category"></span>
+          </div>
+
+          <div class="form-field">
+            <label for="amount">Amount (₹)</label>
+            <input type="number" id="amount" step="0.01" min="0" placeholder="0.00" required />
+            <span class="error" data-for="amount"></span>
+          </div>
+        </div>
+        <div class="actions">
+          <button type="submit" id="submit-btn" class="btn primary">Add Transaction</button>
+          <button type="button" id="reset-btn" class="btn">Reset</button>
+        </div>
+        <input type="hidden" id="edit-id" />
+      </form>
+    </section>
+
+    <!-- Filters and Controls -->
+    <section class="panel">
+      <h2>Transactions</h2>
+      <div class="filters">
+        <select id="filter-type">
+          <option value="all">All Types</option>
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>
+        </select>
+
+        <select id="filter-category">
+          <option value="all">All Categories</option>
+          <option>Food</option>
+          <option>Transportation</option>
+          <option>Entertainment</option>
+          <option>Rent</option>
+          <option>Utilities</option>
+          <option>Shopping</option>
+          <option>Health</option>
+          <option>Education</option>
+          <option>Other</option>
+        </select>
+
+        <input type="text" id="search-text" placeholder="Search description..." />
+
+        <div class="spacer"></div>
+
+        <button id="export-btn" class="btn">Export JSON</button>
+        <label class="btn file-btn">
+          Import JSON
+          <input type="file" id="import-input" accept="application/json" hidden />
+        </label>
+        <button id="clear-btn" class="btn danger">Clear All</button>
+      </div>
+
+      <div class="table-wrap">
+        <table id="txn-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Description</th>
+              <th>Category</th>
+              <th class="right">Amount (₹)</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="txn-tbody">
+            <!-- Rows injected by JS -->
+          </tbody>
+        </table>
+        <div id="empty-state" class="empty">No transactions yet. Add your first one above.</div>
+      </div>
+    </section>
+
+    <!-- Chart -->
+    <section class="panel">
+      <h2>Expense Distribution</h2>
+      <p class="muted">Shows % share of expenses by category.</p>
+      <canvas id="expense-chart" height="120"></canvas>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>Expense Tracker • Built with HTML, CSS, JavaScript • LocalStorage Enabled</small>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
